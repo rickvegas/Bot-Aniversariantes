@@ -4,6 +4,7 @@ from discord.ext import commands, tasks
 import aiosqlite
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from "../tamplates/dashboard.html" import render_template, jsonify-
 
 # Adicione estas linhas:
 import asyncio
@@ -16,6 +17,10 @@ port = 4000  # Porta que você deseja usar
 @app.route('/')
 def hello():
     return "Hello World!"
+
+@app.route('/dashboard')
+def Dashboard():
+    return render_template('dashboard.html')
 
 def run_flask():
     app.run(host="0.0.0.0", port=port)
