@@ -16,10 +16,10 @@ port = 4000  # Porta que você deseja usar
 
 @app.route('/')
 def hello():
-    return "Hello World!"
+    return render_template('dashboard.html')
 
 @app.route('/dashboard')
-def Dashboard():
+def dashboard():
     return render_template('dashboard.html')
 
 def run_flask():
