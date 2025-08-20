@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: bot-aniversarios
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: DISCORD_TOKEN
+        fromSecret: DISCORD_TOKEN
+
+  - type: web
+    name: painel-aniversarios
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python painel.py
+    envVars:
+      - key: DEBUG
+        value: False
