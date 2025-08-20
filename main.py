@@ -4,7 +4,7 @@ from discord.ext import commands, tasks
 import aiosqlite
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from "../tamplates/dashboard.html" import render_template, jsonify-
+from flask import render_template, jsonify
 
 # Adicione estas linhas:
 import asyncio
