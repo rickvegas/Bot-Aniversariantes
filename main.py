@@ -7,7 +7,18 @@ from dotenv import load_dotenv
 
 # Adicione estas linhas:
 import asyncio
-from aiohttp import web
+from flask import Flask
+import threading
+
+app = Flask(__name__)
+port = 4000  # Porta que você deseja usar
+
+@app.route('/')
+def hello():
+    return "Hello World!"
+
+def run_flask():
+    app.run(host="0.0.0.0", port=port)
 
 load_dotenv()
 
@@ -427,21 +438,23 @@ async def listar_colaboradores(ctx):
     except Exception as e:
         await ctx.send(f"❌ Erro ao listar colaboradores: {str(e)}")
 
-async def keep_alive():
-    async def handle(request):
-        return web.Response(text="Bot está rodando!")
-    app = web.Application()
-    app.router.add_get("/", handle)
-    runner = web.AppRunner(app)
-    await runner.setup()
-    site = web.TCPSite(runner, "0.0.0.0", int(os.environ.get("PORT", 10000)))
-    await site.start()
+# async def keep_alive():
+#     async def handle(request):
+#         return web.Response(text="Bot está rodando!")
+#     app = web.Application()
+#     app.router.add_get("/", handle)
+#     runner = web.AppRunner(app)
+#     await runner.setup()
+#     site = web.TCPSite(runner, "0.0.0.0", int(os.environ.get("PORT", 10000)))
+#     await site.start()
 
 if __name__ == "__main__":
     token = os.environ.get('DISCORD_TOKEN')
 
-    loop = asyncio.get_event_loop()
-    loop.create_task(keep_alive())  # Inicia o servidor web
+    # Inicie o Flask em uma thread separada
+    flask_thread = threading.Thread(target=run_flask)
+    flask_thread.daemon = True
+    flask_thread.start()
 
     if token:
         bot.run(token)
