@@ -4,14 +4,15 @@ from discord.ext import commands, tasks
 import aiosqlite
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from flask import render_template, jsonify
+from flask import render_template, jsonify, Flask
+
+# Adicione o argumento template_folder
+app = Flask(__name__, template_folder='.')
 
 # Adicione estas linhas:
 import asyncio
-from flask import Flask
 import threading
 
-app = Flask(__name__)
 port = 4000  # Porta que você deseja usar
 
 @app.route('/')
